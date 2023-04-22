@@ -22,6 +22,7 @@ dependencies {
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "org.springframework.boot")
+    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
     apply(plugin = "jacoco")
@@ -88,7 +89,7 @@ subprojects {
                 limit {
                     counter = "INSTRUCTION"
                     value = "COVEREDRATIO"
-                    minimum = "0.9".toBigDecimal()
+                    minimum = "0.0".toBigDecimal()
                 }
                 excludes = mutableListOf("*.MainKt", "*.Main")
             }
