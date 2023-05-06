@@ -1,10 +1,7 @@
 package com.playground.application.service
 
 import com.zaxxer.hikari.HikariPoolMXBean
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newFixedThreadPoolContext
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -23,30 +20,7 @@ class CoroutineTransaction(
 
     @Transactional
     fun coroutineTransaction() {
-        /*(1L..2L).map {
-            CoroutineScope(Dispatchers.IO).launch {
-                val innerCurrentThread = Thread.currentThread()
-                logger.info("Coroutine Start Thread Inner : ${innerCurrentThread.name}")
-                runCatching {
-                    increaseStudentAgeService.increase(1, 1)
-                }.onSuccess {
-                    logger.info("Success - $it")
-                }.onFailure {
-                    logger.info("Fail - $it")
-                }
-                logger.info("Coroutine End Thread Inner : ${innerCurrentThread.name}")
-            }
-        }
-        delay(3000L)*/
-        runBlocking {
-            /*(1L..3L).map {
-                launch {
-                    val innerCurrentThread = Thread.currentThread()
-                    logger.info("Coroutine Start Thread Inner : ${innerCurrentThread.name} id - ${innerCurrentThread.id}")
-                    increaseStudentAgeService.increase(it, 1)
-                    logger.info("Coroutine End Thread Inner : ${innerCurrentThread.name} id - ${innerCurrentThread.id}")
-                }
-            }*/
+        runBlocking(Dispatchers.IO) {
             val innerCurrentThread = Thread.currentThread()
             logger.info("Coroutine Start Thread Inner : ${innerCurrentThread.name} id - ${innerCurrentThread.id}")
             launch { increaseStudentAgeService.increase(1, 1) }
@@ -73,7 +47,7 @@ class CoroutineTransaction(
             hikariPoolMXBean.threadsAwaitingConnection
         )
         for (i in 1L..3L) {
-            // increaseStudentAgeService.increase(i, 1)
+            increaseStudentAgeService.increase(i, 1)
         }
     }
 }

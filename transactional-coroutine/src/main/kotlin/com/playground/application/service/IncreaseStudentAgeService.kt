@@ -17,7 +17,7 @@ class IncreaseStudentAgeService(
     val logger = LoggerFactory.getLogger("IncreaseStudentAgeService Test")
 
     @Transactional
-    suspend fun increase(id: Long, value: Long) {
+    fun increase(id: Long, value: Long) {
         logger.info(
             "connections info total: {}, active: {}, idle: {}, await: {}",
             hikariPoolMXBean.totalConnections,
