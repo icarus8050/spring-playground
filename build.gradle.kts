@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("org.springframework.boot") version "2.7.6"
     id("io.spring.dependency-management") version "1.1.0"
@@ -41,9 +39,6 @@ subprojects {
         testImplementation("io.kotest:kotest-assertions-core:5.5.4")
     }
 
-    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
-        debug.set(true)
-    }
 
     jacoco {
         toolVersion = "0.8.8"
@@ -94,9 +89,5 @@ subprojects {
                 excludes = mutableListOf("*.MainKt", "*.Main")
             }
         }
-    }
-
-    tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "13"
     }
 }
