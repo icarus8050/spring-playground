@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test
 import java.nio.charset.Charset
 
 class StudentTest {
-
     @Test
     fun test() {
         val a = "가나다"

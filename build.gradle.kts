@@ -1,9 +1,9 @@
 plugins {
-    id("org.springframework.boot") version "2.7.6"
-    id("io.spring.dependency-management") version "1.1.0"
-    kotlin("jvm") version "1.7.21"
-    kotlin("plugin.spring") version "1.7.21"
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.springframework.boot") version "3.5.10"
+    id("io.spring.dependency-management") version "1.1.7"
+    kotlin("jvm") version "2.1.21"
+    kotlin("plugin.spring") version "2.1.21"
+    id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
     jacoco
 }
 
@@ -12,6 +12,17 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_23
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_23)
+    }
 }
 
 dependencies {
@@ -31,18 +42,27 @@ subprojects {
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-reflect")
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
         testImplementation(kotlin("test"))
         testImplementation("org.springframework.boot:spring-boot-starter-test")
-        testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
-        testImplementation("io.kotest:kotest-assertions-core:5.5.4")
+        testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
+        testImplementation("io.kotest:kotest-assertions-core:5.9.1")
     }
 
+    java {
+        sourceCompatibility = JavaVersion.VERSION_23
+        targetCompatibility = JavaVersion.VERSION_23
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_23)
+        }
+    }
 
     jacoco {
-        toolVersion = "0.8.8"
-        reportsDirectory.set(layout.buildDirectory.dir("$buildDir/reports/jacoco"))
+        toolVersion = "0.8.14"
+        reportsDirectory.set(layout.buildDirectory.dir("reports/jacoco"))
     }
 
     tasks.test {
@@ -68,8 +88,8 @@ subprojects {
                     fileTree(it) {
                         exclude("**/com/playground/**/Main.class", "**/com/playground/**/MainKt.class")
                     }
-                }
-            )
+                },
+            ),
         )
 
         finalizedBy(tasks.jacocoTestCoverageVerification)
